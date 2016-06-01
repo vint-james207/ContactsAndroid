@@ -13,10 +13,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener {
 
-    ArrayAdapter<String> items;
+    ArrayAdapter<Contact> items;
 
     ListView list;
     EditText text;
+    EditText number;
     Button addButton;
 
     @Override
@@ -26,9 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         list = (ListView) findViewById(R.id.listView);
         text = (EditText) findViewById(R.id.editText);
+        number = (EditText) findViewById(R.id.editText2);
         addButton = (Button) findViewById(R.id.add);
 
-        items = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        items = new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1);
         list.setAdapter(items);
 
         addButton.setOnClickListener(this);
@@ -38,15 +40,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String item = text.getText().toString();
-        items.add(item);
+        String name = text.getText().toString();
+        String phone =number.getText().toString();
+        Contact contact = new Contact(name, phone);
+        items.add(contact);
         text.setText("");
+        number.setText("");
 
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        String item = items.getItem(position);
+        Contact item = items.getItem(position);
         items.remove(item);
         return true;
     }
